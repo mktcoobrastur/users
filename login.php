@@ -1,6 +1,7 @@
 <?php
     $user   = $_POST['user'];
     require "../televenda/conn.php";
+
     if(isset($_POST['submit'])) {
         $consulta = mysqli_query($con, "SELECT * FROM atendentes Where id = '$user'");
         $l = mysqli_fetch_array($consulta);
@@ -19,7 +20,8 @@
 
 <form action="login.php" method="post">
     <div class="form-control">
-        <select name="user" class="campo">
+        <input type="hidden" name="user" value="<?php echo $user; ?>">
+        <select name="plano" class="campo">
             <option>Escolha um Plano</option>
             <option value="0">MASTER</option>
             <option value="1">VIP</option>
