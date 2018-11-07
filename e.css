@@ -1,0 +1,22 @@
+body {
+    background-image: url(i/bg.jpg);
+    text-align: center;
+}
+.campo {
+    width: 150px;
+    height: 20px;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #000;
+}
+.out {
+    width: 160px;
+    margin: 0 auto;
+    text-align: center;
+}
+.logo {
+    margin-left: 35%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 120px;
+}
