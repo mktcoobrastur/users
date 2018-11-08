@@ -1,39 +1,72 @@
 <?php
-    $user = $_POST['user'];
+    if(isset($_POST['user'])) {    
+        $user = $_POST['user'];
+    }
     require "../televenda/conn.php";
 
     if(isset($_POST['submit'])) {
-        $consulta = mysqli_query($con, "SELECT * FROM atendentes Where id = '$user'");
-        $l = mysqli_fetch_array($consulta);
+        $consulta       = mysqli_query($con, "SELECT id, nome FROM atendentes");
+        $l              = mysqli_fetch_array($consulta);
         echo $l['qnt_vendas'];
         echo $user;
     } else { $errors; }
 
     if(isset($_POST['submitCad'])) {
-        $consulta = mysqli_query($con, "SELECT * FROM atendentes Where id = '$user'");
-        $l = mysqli_fetch_array($consulta);
-        $qntVendas = $l['qnt_vendas'];
-        $qntFinal = $qntVendas + 1;
-        mysqli_query($con, "UPDATE atendentes SET qnt_vendas = $user WHERE id = $user");
-        $sql =  "SELECT * FROM atendentes where qnt_vendas >= 20";
-        $c = mysqli_query($con, $sql);
-        print_r($c);
+
+        function arraymetas($id) {
+            $metageral->getBounds($id);
+            return $array;
+        }
+
+        $metageral      = 300;
+        $weeks          = 5;
+        $uteis          = 18;
+        $consulta       = mysqli_query($con, "SELECT id, nome, qnt_vendas FROM atendentes", mysqli_connect_error());
+        $l              = mysqli_fetch_array($consulta);
+        $qntVendas      = $l['qnt_vendas'];
+
+        $qntFinal       = $qntVendas + 1;
+        $c1             = $metageral->getBounds($weeks);
+        $c2             = $metageral / $uteis;
+        $c3             = $c1 + $c2;
+        $qfinal         = $metageral->arraymetas($c3);
+
+        mysqli_query      ($con, "UPDATE atendentes SET qnt_vendas* sum(indice.qnt_vendas) = $c2 WHERE id = $user");
+        $sql            = "SELECT * FROM atendentes where qnt_vendas >= $c1";
+        $c              = mysqli_query($con, $sql, mysqli_connect_error());
+        
+        //isset($metageral);
+        var_dump($l);
+
     } else { $errors; }
 
     if(isset($_POST['passaId'])) {
         $id = $_POST['passaId'];
-        return $id;
+        return $array;
     } else { $errors; }
 
-    if(isset($_POST['get'])) {
-        $idF =  $this->with($data, $idG)->where('representante','=','televenda')->first($id);
-    } else { $errors; }
+    if(isset($_GET['get'])) {
 
+        $get = $_GET['get'];
+ 
+        function renderiza($data) {
+            $dados     = getComputedParam($idF);
+            $data      = json_encode($dados);
+            return $data;
+        }
+
+        $idF = $c->with($data, $id, $get)
+                 ->where('representante','=','televenda')
+                 ->renderiza($data)
+                 ->first();
+                 $dados[]   = array_map('utf8_encode', $c);
+    } else { $errors; }
 ?>
 <html lang="pt-br">
 <head>
         <meta charset="utf-8">
         <title>Coobrastur</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
 <form action="login.php<?php $PHP_SELF; ?>" method="post">
@@ -50,15 +83,19 @@
         <input type="submit" name="submitCad" value="Lançar">
     </div>
 </form>
-
-                <?php
-                    require "../televenda/conn.php";
-                    $consulta2 = mysqli_query($con, "SELECT id, qnt_vendas FROM atendentes WHERE qnt_vendas >= metageral");
-                    while ($l = mysqli_fetch_array($consulta2)) {
-                            echo $l['nome'].' - ';
-                    }
-                    print_r($l);
-                ?>
-
+<script type="text/javascript">
+new Vue({
+  el: '#outForm',
+  data: {
+    url: 'dados.json',
+    data: dados[$i]
+  },
+  methods: {
+    shuffle: function () {
+      this.dados[$i] = _.shuffle(this.dados[$i])
+    }
+  }
+})
+</script>
 </body>
 </html>

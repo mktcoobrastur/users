@@ -1,0 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+
+
+array(20) { [0]=> string(1) "1" ["id"]=> string(1) "1" 
+            [1]=> string(14) "Daphne Fontana" ["nome"]=> string(14) "Daphne Fontana" 
+            [2]=> string(10) "daphne.jpg" ["img"]=> string(10) "daphne.jpg" 
+            [3]=> string(9) "sound.mp3" ["mp3"]=> string(9) "sound.mp3" 
+            [4]=> string(1) "7" ["qnt_vendas"]=> string(1) "7" 
+            [5]=> string(9) "televenda" ["representante"]=> string(9) "televenda" 
+            [6]=> NULL ["pass"]=> NULL 
+            [7]=> NULL ["created_at"]=> NULL 
+            [8]=> NULL ["updated_at"]=> NULL 
+            [9]=> NULL ["deleted_at"]=> NULL }
