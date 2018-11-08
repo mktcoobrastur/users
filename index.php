@@ -1,3 +1,8 @@
+<?php
+    if (isset($_POST['user'])) {
+        $user   = $_POST['user'];
+    }
+?>
 <html lang="pt-br">
 <head>
         <meta charset="utf-8">
@@ -8,7 +13,7 @@
 <body>
     <img class="logo" src="i/logo-coobrastur.png" />
     <h6 style="text-align: center; color: #999;">Controle Televenda</h6>
-    <form action="login.php" method="post">
+    <form action="login.php<?php $PHP_SELF; ?>" method="post">
         <div class="out">
             <select name="user" class="campo">
                 <?php
@@ -17,11 +22,15 @@
                 
                     while ($l = mysqli_fetch_array($consulta)) {
                 ?>
-                        <option value="<?php echo $l['id']; ?>"><?php echo $l['nome']; ?></option>
+                        <option value="<?php echo $l['id']; ?>">
+                            <?php echo $l['nome']; ?>
+                        </option>
                 <?php
                     }
                 ?>
             </select>
+
+            <input type="hidden" name="get" value="0" />
             <input type="submit" class="campo" value="Entrar" name="submit" />
         </div>
     </form>
