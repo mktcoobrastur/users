@@ -5,7 +5,7 @@
     require "../televenda/conn.php";
 
     if(isset($_POST['submit'])) {
-        $consulta       = mysqli_query($con, "SELECT id, nome FROM atendentes");
+        $consulta       = mysqli_query($con, "SELECT id, nome FROM atendentes", mysqli_connect_error($err));
         $l              = mysqli_fetch_array($consulta);
         echo $l['qnt_vendas'];
         echo $user;
@@ -14,26 +14,26 @@
     if(isset($_POST['submitCad'])) {
 
         function arraymetas($id) {
-            $metageral->getBounds($id);
+            $metageral->getBounds($c2);
             return $array;
         }
 
         $metageral      = 300;
         $weeks          = 5;
         $uteis          = 18;
-        $consulta       = mysqli_query($con, "SELECT id, nome, qnt_vendas FROM atendentes", mysqli_connect_error());
+        $consulta       = mysqli_query($con, "SELECT id, nome, qnt_vendas FROM atendentes", mysqli_connect_error($err));
         $l              = mysqli_fetch_array($consulta);
         $qntVendas      = $l['qnt_vendas'];
 
         $qntFinal       = $qntVendas + 1;
-        $c1             = $metageral->getBounds($weeks);
+        $c1             = $metageral / $weeks;
         $c2             = $metageral / $uteis;
         $c3             = $c1 + $c2;
         $qfinal         = $metageral->arraymetas($c3);
 
         mysqli_query      ($con, "UPDATE atendentes SET qnt_vendas* sum(indice.qnt_vendas) = $c2 WHERE id = $user");
         $sql            = "SELECT * FROM atendentes where qnt_vendas >= $c1";
-        $c              = mysqli_query($con, $sql, mysqli_connect_error());
+        $c              = mysqli_query($con, $sql, mysqli_connect_error($err));
         
         //isset($metageral);
         var_dump($l);
@@ -50,8 +50,8 @@
         $get = $_GET['get'];
  
         function renderiza($data) {
-            $dados     = getComputedParam($idF);
-            $data      = json_encode($dados);
+            $dados     = getComputedParam($get).getComputedParam($idF);
+            $data      = $this->json_encode($dados);
             return $data;
         }
 
