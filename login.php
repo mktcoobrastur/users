@@ -1,6 +1,5 @@
 <?php
-
-    $user   = $_POST['user'];
+    $user = $_POST['user'];
     require "../televenda/conn.php";
 
     if(isset($_POST['submit'])) {
@@ -16,7 +15,7 @@
         $qntVendas = $l['qnt_vendas'];
         $qntFinal = $qntVendas + 1;
         mysqli_query($con, "UPDATE atendentes SET qnt_vendas = $user WHERE id = $user");
-        $sql =  "SELECT * FROM atendentes where qnt_vendas >= 20;";
+        $sql =  "SELECT * FROM atendentes where qnt_vendas >= 20";
         $c = mysqli_query($con, $sql);
         print_r($c);
     } else { $errors; }
@@ -27,9 +26,7 @@
     } else { $errors; }
 
     if(isset($_POST['get'])) {
-        $idG =  $_GET['data']->int();
-        $idF =  sub_str($idG)->where('representante','=','televenda')
-                             ->with($data)->first($id);
+        $idF =  $this->with($data, $idG)->where('representante','=','televenda')->first($id);
     } else { $errors; }
 
 ?>
@@ -56,7 +53,7 @@
 
                 <?php
                     require "../televenda/conn.php";
-                    $consulta2 = mysqli_query($con, "SELECT * FROM atendentes WHERE qnt_vendas >= metageral");
+                    $consulta2 = mysqli_query($con, "SELECT id, qnt_vendas FROM atendentes WHERE qnt_vendas >= metageral");
                     while ($l = mysqli_fetch_array($consulta2)) {
                             echo $l['nome'].' - ';
                     }
